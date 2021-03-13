@@ -15,24 +15,36 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 #fig = px.area(df, x="Year", y="Snow_Percent")
 
-fig = px.line(df, x="Year", y="Snow_Percent")
+fig = px.line(df, x="Year", y="Snow_Percent", title='Placeholder')
 
 fig['layout']['yaxis']['autorange'] = "reversed"
 
 
 app.layout = html.Div([
 
+
+    
     html.H1("ChronosZoi 2021", style={'text-align': 'center'}),
+
+    dcc.Input(
+        id='input-field',
+        type='text'
+    ),
+
+    html.H3(id='output-header'),
+
 
     dcc.Graph(id='my_bee_map', figure=fig),
 
 
     daq.Thermometer(
+        label='Sea Surface Temperature',
+        labelPosition='top',
         id='my-thermometer',
-        value=1,
         min=0,
-        max=13,
+        max=12,
         showCurrentValue=True,
+        color='red',
         style={
             'margin-bottom': '5%'
         }
@@ -41,8 +53,8 @@ app.layout = html.Div([
 
     daq.Gauge(
     id='my-gauge',
-    color={"gradient":True,"ranges":{"green":[0.4,1],"yellow":[0.25, 0.39],"red":[0, 0.24]}},
-    value=2,
+    color={"ranges":{"green":[0.39, 1],"yellow":[0.24, 0.39],"red":[0, 0.24]}},
+    #color="#9B51E0",
     label='Chlorophyll',
     max=1,
     min=0,
@@ -69,13 +81,25 @@ app.layout = html.Div([
 
 @app.callback(
     dash.dependencies.Output('my-thermometer', 'value'),
+    dash.dependencies.Output(component_id='my-gauge', component_property='value'),
     [dash.dependencies.Input('thermometer-slider', 'value')])
 def update_thermometer(value):
     a = df[df['Year'] == value]
     b = float(a['T_Anomaly'].values)
-    return b
+    c = float(a['Chlorophyll'].values)
+    return b, c
+
+@app.callback(
+    dash.dependencies.Output('output-header','children'),
+    [dash.dependencies.Input('input-field','value')]
+)
+def update_header(prop):
+    return prop
+
 
 
 if __name__ == '__main__':
     app.run_server(debug=True)
+
+
 
