@@ -27,13 +27,15 @@ app.layout = html.Div([
     
     html.H1("ChronosZoi 2021", style={'text-align': 'center'}),
 
+
+
     html.Div([
     dcc.Input(
         id='input-field',
         type='text',
         placeholder='Enter snow depth',
     ),
-    ], style = {'width': '100%', 'display': 'flex-box', 'align-items': 'center', 'justify-content': 'center'}),
+    ], style = {'width': '100%', 'align-items': 'center', 'justify-content': 'center'}),
 
 
     html.H3(id='output-header', style={'text-align': 'center'}),
@@ -72,15 +74,17 @@ app.layout = html.Div([
   
 
     html.Div(id='slider-output-container'),
-    dcc.Slider(
+
+    daq.Slider(
         id='thermometer-slider',
-        #marks={str(Year): str(Year) for Year in df['Year'].unique()},
-        value=1,
         min=1976,
-        max=2100,    
+        max=2100,
+        value=1976,
+        handleLabel={"showCurrentValue": True,"label": "Year"},
+        step=1,
+        size=1700,
+    )
 
-
-    ),
 
 ])
 
@@ -98,7 +102,7 @@ def update_thermometer(value):
     a = df[df['Year'] == value]
     b = float(a['T_Anomaly'].values)
     c = float(a['Chlorophyll'].values)
-    d = 'Year {}'.format(value)
+    d = ''
     return b, c, d
 
 @app.callback(
@@ -117,4 +121,5 @@ def update_header(prop):
 
 if __name__ == '__main__':
     app.run_server(debug=True)
+
 
