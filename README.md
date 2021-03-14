@@ -11,4 +11,4 @@ In order to be able to use the ChronosZoi 2021 Web Application, a local server n
 
 4. Install the dependencies using `pip3 install -r requirements.txt`
 
-5. Finally run `python3 app.py` to start the application and visit http://127.0.0.1:8050/ to see the applicatiob live.
+5. Finally run `python3 app.py` to start the application and visit http://127.0.0.1:8050/ to see the application live.
