@@ -21,7 +21,7 @@ app.title = 'ChronosZoi'
 
 app.layout = html.Div([
 
-    html.Img(src=app.get_asset_url('SvalbardIMG4.jpg'), style={'width': '100%'}),
+    html.Img(src=app.get_asset_url('SvalbardIMG1.jpg'), style={'width': '100%'}),
 
     html.Br(),
 
@@ -157,4 +157,3 @@ def update_header(prop):
 
 if __name__ == '__main__':
     app.run_server(debug=True)
-
