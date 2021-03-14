@@ -2,7 +2,6 @@ import dash
 import dash_daq as daq
 import dash_core_components as dcc
 import dash_html_components as html
-from dash_html_components.Footer import Footer
 import pandas as pd
 import plotly.express as px
 
@@ -18,13 +17,10 @@ plot_df = df.copy()
 
 plot_df = plot_df.rename(columns={'Snow_Percent': 'Percentage of Snow'})
 
-
 fig = px.line(plot_df, x="Year", y="Percentage of Snow", title='Placeholder')
 
-fig.update_layout(title='Percentage of snow over the years',
-                   yaxis_title='Percentage of Snow',)
-                   
-
+fig.update_layout(title='Percentage of snow over the years compared to the cold climate (1961 - 1990)',
+                  yaxis_title='Percentage of Snow', )
 
 fig['layout']['yaxis']['autorange'] = "reversed"
 
@@ -36,7 +32,7 @@ app.layout = html.Div([
 
     html.Br(),
 
-    html.H1("ChronosZoi 2021", style={'text-align': 'center'}),
+    html.H1("ChronosZoi 2021 Web Application: Trends in the Svalbard area visualised.", style={'text-align': 'center'}),
 
     html.Br(),
 
@@ -111,8 +107,14 @@ app.layout = html.Div([
     html.Br(),
     html.Br(),
 
-    html.P("The concentration Chlorophyll in the Arctic Ocean around Svalbard is important for...",
+    html.P("Chlorophyll in the ocean pulls carbon dioxide out of the water (and the atmosphere) and enriches it with"
+           " oxygen. Furthermore, it is the primary food source for countless creatures on the bottom of the food"
+           " chain. Therefore, higher concentrations are generally seen as good and a lack of chlorophyll"
+           " (among other caused by rising ocean temperatures, lack of nutrients, lack of light, turbulent"
+           " water or other changes in the water chemistry) therefore is a threat to all marine life.",
            style={'text-align': 'center'}),
+
+    html.Br(),
 
     html.Div([
         daq.Gauge(
@@ -127,11 +129,9 @@ app.layout = html.Div([
 
     html.Div(id='slider-output-container'),
 
-html.A(html.Button('Refresh Data'),href='/'),
-
+html.A(html.Button('Refresh Data / Select a new year', style={'width':'1500px','align-text':'center'}),href='/'),
 
 ])
-
 
 @app.callback(
     dash.dependencies.Output('my-thermometer', 'value'),
@@ -165,7 +165,8 @@ def update_header(prop):
     first_snow_percent = float(first_row['Snow_Decimals'].values)
     first_res_str = str(abs(round(prop * snow_percent, 1) - round(prop * first_snow_percent, 1)))
 
-    result = "It will be around " + res_str + " cm in the year " + str(yr) + ", which is " + first_res_str + " cm lower than the year 1976."
+    result = "It will be around " + res_str + " cm in the year " + str(
+        yr) + ", which is " + first_res_str + " cm lower than the year 1976."
     return result
 
 
