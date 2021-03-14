@@ -71,6 +71,9 @@ app.layout = html.Div([
 
     html.Br(),
     html.Br(),
+    
+
+    html.H3(id='output-thermometer-header', style={'text-align': 'center'}),
 
     html.Div([
         daq.Thermometer(
@@ -112,15 +115,18 @@ app.layout = html.Div([
     dash.dependencies.Output('my-thermometer', 'value'),
     dash.dependencies.Output(component_id='my-gauge', component_property='value'),
     dash.dependencies.Output('slider-output-container', 'children'),
+    dash.dependencies.Output('output-thermometer-header', 'children'),
     [dash.dependencies.Input('thermometer-slider', 'value')])
 def update_thermometer(value):
     global yr
     yr = value
     a = df[df['Year'] == value]
     b = float(a['T_Anomaly'].values)
+    t_diff = b - 0.056667
     c = float(a['Chlorophyll'].values)
     d = ''
-    return b, c, d
+    temp_out = "The temperature anomaly is " + str(t_diff) + " higher than 1977"
+    return b, c, d, temp_out
 
 
 @app.callback(
