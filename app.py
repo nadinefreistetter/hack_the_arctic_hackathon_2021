@@ -51,7 +51,7 @@ app.layout = html.Div([
     html.Br(),
 
     html.P("The average amount of snowfall in the Svalbard area is decreasing. "
-           "Here below, you can add any value, representing the snow depth in the old climate (around 1976)."
+           "Here below, you can add any value, representing the snow depth in the old climate of Svalbard (around 1976)."
            "The text below will show how that number has changed over the years.",
            style={'text-align': 'center'}),
 
@@ -157,5 +157,4 @@ def update_header(prop):
 
 if __name__ == '__main__':
     app.run_server(debug=True)
-
 
