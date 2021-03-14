@@ -21,7 +21,7 @@ app.title = 'ChronosZoi'
 
 app.layout = html.Div([
 
-    html.Img(src=app.get_asset_url('SvalbardIMG.jpg'), style={'width': '100%'}),
+    html.Img(src=app.get_asset_url('SvalbardIMG4.jpg'), style={'width': '100%'}),
 
     html.Br(),
 
@@ -30,7 +30,8 @@ app.layout = html.Div([
     html.Br(),
 
     html.P("Welcome to this Web Application. With this tool, you can see what trends are going on in the Svalbard area."
-           " Here, you can select any year between 1976 and 2100, to see how the observed and forecasted trends are for the temperature, snow depth and water quality.",
+           " Here, you can select any year between 1976 (first observations) and 2100 (end of the century), to see how"
+           " the observed and forecasted trends are for the temperature, snow depth and water quality.",
            style={'text-align': 'center'}),
 
     html.Br(),
@@ -71,13 +72,16 @@ app.layout = html.Div([
 
     html.Br(),
     html.Br(),
-    
+
+    html.P("The Svalbard area is one of the fastest-warming places on Earth and this trend is forecasted to continue. "
+           "The thermometer below shows the temperature anomaly compared to the 30-year average of 1961 - 1990.",
+           style={'text-align': 'center'}),
 
     html.H3(id='output-thermometer-header', style={'text-align': 'center'}),
 
     html.Div([
         daq.Thermometer(
-            label='Sea Surface Temperature',
+            label='Temperature anomaly',
             labelPosition='top',
             id='my-thermometer',
             min=0,
@@ -93,20 +97,24 @@ app.layout = html.Div([
 
     html.Img(src=app.get_asset_url('SvalbardIMG3.jpg'), style={'width': '100%'}),
 
+    html.Br(),
+    html.Br(),
+
+    html.P("The concentration Chlorophyll in the Arctic Ocean around Svalbard is important for...",
+           style={'text-align': 'center'}),
+
     html.Div([
         daq.Gauge(
             id='my-gauge',
             color={'gradient': True, "ranges": {"green": [0.39, 1], "yellow": [0.24, 0.39], "red": [0, 0.24]}},
             # color="#9B51E0",
-            label='Chlorophyll',
+            label='Chlorophyll concentration',
             max=1,
             min=0,
         ),
     ], style={'width': '100%', 'display': 'inline-block', 'align-items': 'right', 'justify-content': 'right'}),
 
     html.Div(id='slider-output-container'),
-
-
 
 ])
 
@@ -122,10 +130,10 @@ def update_thermometer(value):
     yr = value
     a = df[df['Year'] == value]
     b = float(a['T_Anomaly'].values)
-    t_diff = b - 0.056667
+    t_anom = (str(round(b, 1)))
     c = float(a['Chlorophyll'].values)
     d = ''
-    temp_out = "The temperature anomaly is " + str(t_diff) + " higher than 1977"
+    temp_out = "The temperature is about " + t_anom + "°C higher than around 1976."
     return b, c, d, temp_out
 
 
@@ -143,9 +151,7 @@ def update_header(prop):
     first_snow_percent = float(first_row['Snow_Decimals'].values)
     first_res_str = str(abs(round(prop * snow_percent, 1) - round(prop * first_snow_percent, 1)))
 
-
-
-    result ="It is " + res_str + " cm in the year " + str(yr) + " , " + first_res_str + "cm lower than the year 1976"
+    result = "It will be around " + res_str + " cm in the year " + str(yr) + ", which is " + first_res_str + " cm lower than the year 1976."
     return result
 
 
