@@ -2,6 +2,7 @@ import dash
 import dash_daq as daq
 import dash_core_components as dcc
 import dash_html_components as html
+from dash_html_components.Footer import Footer
 import pandas as pd
 import plotly.express as px
 
@@ -125,6 +126,9 @@ app.layout = html.Div([
     ], style={'width': '100%', 'display': 'inline-block', 'align-items': 'right', 'justify-content': 'right'}),
 
     html.Div(id='slider-output-container'),
+
+html.A(html.Button('Refresh Data'),href='/'),
+
 
 ])
 
