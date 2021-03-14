@@ -133,7 +133,7 @@ def update_thermometer(value):
     t_anom = (str(round(b, 1)))
     c = float(a['Chlorophyll'].values)
     d = ''
-    temp_out = "The temperature is about " + t_anom + "°C higher than around 1976."
+    temp_out = "The temperature is about " + t_anom + "°C higher in " + str(yr) + " than around 1976."
     return b, c, d, temp_out
 
 
