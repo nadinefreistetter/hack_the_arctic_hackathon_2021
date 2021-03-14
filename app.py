@@ -13,7 +13,17 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 # fig = px.area(df, x="Year", y="Snow_Percent")
 
-fig = px.line(df, x="Year", y="Snow_Percent", title='Placeholder')
+plot_df = df.copy()
+
+plot_df = plot_df.rename(columns={'Snow_Percent': 'Percentage of Snow'})
+
+
+fig = px.line(plot_df, x="Year", y="Percentage of Snow", title='Placeholder')
+
+fig.update_layout(title='Percentage of snow over the years',
+                   yaxis_title='Percentage of Snow',)
+                   
+
 
 fig['layout']['yaxis']['autorange'] = "reversed"
 
