@@ -138,7 +138,14 @@ def update_header(prop):
     row = df[df['Year'] == yr]
     snow_percent = float(row['Snow_Decimals'].values)
     res_str = str(round(prop * snow_percent, 1))
-    result = res_str + " cm in the year " + str(yr)
+
+    first_row = df[df['Year'] == 1976]
+    first_snow_percent = float(first_row['Snow_Decimals'].values)
+    first_res_str = str(abs(round(prop * snow_percent, 1) - round(prop * first_snow_percent, 1)))
+
+
+
+    result ="It is " + res_str + " cm in the year " + str(yr) + " , " + first_res_str + "cm lower than the year 1976"
     return result
 
 
